@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Common;
+using Mt.Common;
 
-namespace Consumer
+namespace Mt.Consumer
 {
   public class Main 
   {

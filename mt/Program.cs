@@ -1,11 +1,11 @@
 ﻿using System;
-using Common;
-using Producer;
-using Consumer;
 using System.IO;
 using System.Linq;
+using Mt.Common;
+using Mt.Producer;
+using Mt.Consumer;
 
-namespace masstransit
+namespace Mt
 {
     class Program
     {

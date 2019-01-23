@@ -1,4 +1,4 @@
-namespace Common
+namespace Mt.Common
 {
     public interface IConfig
     {
