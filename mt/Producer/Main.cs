@@ -40,7 +40,7 @@ namespace Mt.Producer
              Console.Write("Message: ");
              string message = Console.ReadLine();
 
-             var msg = new ConcreteAddMessage
+             var msg = new ConcreteEventMessageAdded
              {
                Id = id,
                Author = author,
@@ -50,7 +50,7 @@ namespace Mt.Producer
              Console.WriteLine("Sending message...");
              Console.WriteLine("> {0}: '{1}'", author, message);
 
-             await bus.Publish<IAddMessage>(msg);
+             await bus.Publish<IEventMessageAdded>(msg);
 
              Console.WriteLine("");
              Console.Write("Quit (y/n)? ");
@@ -83,7 +83,7 @@ namespace Mt.Producer
       }
   }
 
-    class ConcreteAddMessage : IAddMessage
+    class ConcreteEventMessageAdded : IEventMessageAdded
     {
         public int Id { get; set; }
 

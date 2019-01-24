@@ -6,9 +6,9 @@ using Mt.Communication.Commands;
 
 namespace Mt.Consumer
 {
-    public class MessageConsumer : IConsumer<IAddMessage>
+    public class MessageConsumer : IConsumer<IEventMessageAdded>
     {
-        public async Task Consume(ConsumeContext<IAddMessage> context)
+        public async Task Consume(ConsumeContext<IEventMessageAdded> context)
         {
             var sb = new StringBuilder();
 
