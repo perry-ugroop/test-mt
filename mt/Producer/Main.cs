@@ -30,7 +30,6 @@ namespace Mt.Producer
           bus.Start();
 
           bool quit = false;
-          int id = 1;
 
           while(!quit)
           {
@@ -42,7 +41,7 @@ namespace Mt.Producer
 
              var msg = new ConcreteMessageAdded
              {
-               Id = id,
+               Id = GenerateId(),
                Author = author,
                Text = message, 
              };
@@ -64,10 +63,14 @@ namespace Mt.Producer
              }
 
              Console.WriteLine("");
-             ++id;
           }
 
           bus.Stop();
+      }
+
+      private static int GenerateId()
+      {
+          return (int) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
       }
 
       private static IBusControl CreateBus(string host, int port, string username, string password, string queue)
