@@ -30,42 +30,57 @@ namespace Mt.Producer
           bus.Start();
 
           bool quit = false;
-
           while(!quit)
           {
-             Console.Write("Name: ");
-             string author = Console.ReadLine();
-
-             Console.Write("Message: ");
-             string message = Console.ReadLine();
-
-             var msg = new ConcreteMessageAdded
-             {
-               Id = GenerateId(),
-               Author = author,
-               Text = message, 
-             };
+             var msg = GetMessageFromUser();
 
              Console.WriteLine("Sending message...");
-             Console.WriteLine("> {0}: '{1}'", author, message);
+             Console.WriteLine("> {0}: '{1}'", msg.Author, msg.Text);
 
              await bus.Publish<IMessageAdded>(msg);
 
-             Console.WriteLine("");
-             Console.Write("Quit (y/n)? ");
-
-             var key = Console.ReadKey();
-             Console.WriteLine("");
-
-             if (key.Key == ConsoleKey.Y)
-             {
-               quit = true;
-             }
-
-             Console.WriteLine("");
+             quit = AskUserIfQuit();
           }
 
           bus.Stop();
+      }
+
+      private static IMessageAdded GetMessageFromUser()
+      {
+          Console.Write("Name: ");
+          string author = Console.ReadLine();
+
+          Console.Write("Message: ");
+          string message = Console.ReadLine();
+
+          var msg = new ConcreteMessageAdded
+          {
+             Id = GenerateId(),
+             Author = author,
+             Text = message, 
+          };
+
+          return msg;
+      }
+
+      private static bool AskUserIfQuit()
+      {
+          bool quit = false;
+
+          Console.WriteLine("");
+          Console.Write("Quit (y/n)? ");
+
+          var key = Console.ReadKey();
+          Console.WriteLine("");
+
+          if (key.Key == ConsoleKey.Y)
+          {
+            quit = true;
+          }
+
+          Console.WriteLine("");
+
+          return quit;
       }
 
       private static int GenerateId()
