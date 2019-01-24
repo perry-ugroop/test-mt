@@ -37,7 +37,7 @@ namespace Mt.Producer
              Console.WriteLine("Sending message...");
              Console.WriteLine("> {0}: '{1}'", msg.Author, msg.Text);
 
-             await bus.Publish<IMessageAdded>(msg);
+             await SendMessage<IMessageAdded>(bus, msg);
 
              quit = AskUserIfQuit();
           }
@@ -61,6 +61,32 @@ namespace Mt.Producer
           };
 
           return msg;
+      }
+
+      private static async Task SendMessage<MessageType>(IBusControl bus, MessageType msg, string host = null, int port = 0, string queue = null)
+      where MessageType : class
+      {
+        if(host == null || queue == null)
+        {
+          await bus.Publish<MessageType>(msg);
+        }
+        else
+        {
+            // Send message to the specific host and queue
+            Uri uri;
+
+            if (port != 0)
+            {
+              uri = new Uri($"rabbitmq://{host}:{port}/{queue}");
+            }
+            else
+            {
+              uri = new Uri($"rabbitmq://{host}/{queue}");
+            }
+
+            var ep = await bus.GetSendEndpoint(uri);
+            await ep.Send<MessageType>(msg);
+        }
       }
 
       private static bool AskUserIfQuit()
