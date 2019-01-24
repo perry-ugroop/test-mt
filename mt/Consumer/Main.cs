@@ -13,7 +13,13 @@ namespace Mt.Consumer
 
       public static void Run(IConfig config, List<string> parms) 
       {
+          if(parms.Count == 0) {
+              Console.WriteLine("Missing queue name");
+              return;
+          }
+
           Console.WriteLine("Consumer is running using queue '{0}', press Ctrl-C to stop...", parms[0]);
+          Console.WriteLine("");
 
           // Intercept Ctrl-C
           Console.CancelKeyPress += new ConsoleCancelEventHandler(CtrlCHandler);
