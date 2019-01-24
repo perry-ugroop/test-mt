@@ -11,7 +11,7 @@ namespace Mt.Producer
   {
       private static IBusControl bus;
 
-      public static void Run(IConfig config, List<string> parms) 
+      public static async Task Run(IConfig config, List<string> parms) 
       {
           if(parms.Count == 0) {
               Console.WriteLine("Missing queue name");
@@ -50,7 +50,7 @@ namespace Mt.Producer
              Console.WriteLine("Sending message...");
              Console.WriteLine("> {0}: '{1}'", author, message);
 
-             bus.Publish<IAddMessage>(msg);
+             await bus.Publish<IAddMessage>(msg);
 
              Console.WriteLine("");
              Console.Write("Quit (y/n)? ");
@@ -76,12 +76,6 @@ namespace Mt.Producer
               var mtHost = cfg.Host(new Uri($"rabbitmq://{host}:{port}"), hostConfig => {
                   hostConfig.Username(username);
                   hostConfig.Password(password);
-              });
-
-              cfg.ReceiveEndpoint(mtHost, queue, endpoint => {
-                  endpoint.Handler<IAddMessage>(context => {
-                      return Console.Out.WriteLineAsync("Something happened...");
-                  });
               });
           });
 

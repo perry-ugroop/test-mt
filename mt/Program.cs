@@ -21,7 +21,8 @@ namespace Mt
 
             if(args[0] == "producer")
             {
-               Producer.Main.Run(config, parms);
+               var task = Producer.Main.Run(config, parms);
+               task.Wait();
             }
             else if(args[0] == "consumer")
             {
