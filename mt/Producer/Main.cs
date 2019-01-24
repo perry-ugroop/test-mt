@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MassTransit;
 using Mt.Common;
-using Mt.Communication.Commands;
+using Mt.Communication.Events;
 
 namespace Mt.Producer 
 {
@@ -40,7 +40,7 @@ namespace Mt.Producer
              Console.Write("Message: ");
              string message = Console.ReadLine();
 
-             var msg = new ConcreteEventMessageAdded
+             var msg = new ConcreteMessageAdded
              {
                Id = id,
                Author = author,
@@ -50,7 +50,7 @@ namespace Mt.Producer
              Console.WriteLine("Sending message...");
              Console.WriteLine("> {0}: '{1}'", author, message);
 
-             await bus.Publish<IEventMessageAdded>(msg);
+             await bus.Publish<IMessageAdded>(msg);
 
              Console.WriteLine("");
              Console.Write("Quit (y/n)? ");
@@ -83,7 +83,7 @@ namespace Mt.Producer
       }
   }
 
-    class ConcreteEventMessageAdded : IEventMessageAdded
+    class ConcreteMessageAdded : IMessageAdded
     {
         public int Id { get; set; }
 

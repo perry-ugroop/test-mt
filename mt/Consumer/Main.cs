@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MassTransit;
 using Mt.Common;
-using Mt.Communication.Commands;
+using Mt.Communication.Events;
 
 namespace Mt.Consumer
 {

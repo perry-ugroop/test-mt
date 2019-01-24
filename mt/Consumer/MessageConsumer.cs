@@ -2,13 +2,13 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
-using Mt.Communication.Commands;
+using Mt.Communication.Events;
 
 namespace Mt.Consumer
 {
-    public class MessageConsumer : IConsumer<IEventMessageAdded>
+    public class MessageConsumer : IConsumer<IMessageAdded>
     {
-        public async Task Consume(ConsumeContext<IEventMessageAdded> context)
+        public async Task Consume(ConsumeContext<IMessageAdded> context)
         {
             var sb = new StringBuilder();
 

@@ -1,6 +1,6 @@
-namespace Mt.Communication.Commands
+namespace Mt.Communication.Events
 {
-  public interface IEventMessageAdded
+  public interface IMessageAdded
   {
     int Id { get; }
     string Text { get; }
